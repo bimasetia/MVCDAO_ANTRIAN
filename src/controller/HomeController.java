@@ -63,4 +63,14 @@ public class HomeController {
         d.setId(Integer.parseInt(home.getTxtIDUpdate().getText()));
         implHome.update(d);
     }
+
+    //menghapus data yang dipilih
+    public void delete() {
+        if (!home.getTxtIDRunning().getText().trim().isEmpty()) {
+            int id = Integer.parseInt(home.getTxtIDRunning().getText());
+            implHome.delete(id);
+        } else {
+            JOptionPane.showMessageDialog(home, "Pilih data yang akan di hapus");
+        }
+    }
 }
