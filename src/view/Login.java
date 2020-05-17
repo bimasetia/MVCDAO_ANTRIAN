@@ -20,7 +20,7 @@ public class Login extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
-     */
+    */
     Connection conn;
     PreparedStatement pst;
     ResultSet rs;
@@ -160,11 +160,11 @@ public class Login extends javax.swing.JFrame {
                 if (rs.next()) {
                     String sl = rs.getString("role");
                     String un = rs.getString("username");
-                    if (option.equalsIgnoreCase("Admin")&& sl.equalsIgnoreCase("admin")) {
-                        Home ad = new Home(un);
-                        ad.setVisible(true);
-                        setVisible(false);
-                    }
+                    //if (option.equalsIgnoreCase("Admin")&& sl.equalsIgnoreCase("admin")) {
+                   //     Home ad = new Home(un);
+                    //    ad.setVisible(true);
+                    //    setVisible(false);
+                   // }
                     if (option.equalsIgnoreCase("Guest")&& sl.equalsIgnoreCase("guest")) {
                         User gp = new User(un);
                         gp.setVisible(true);

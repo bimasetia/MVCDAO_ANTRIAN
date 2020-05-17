@@ -584,9 +584,9 @@ public class Home extends javax.swing.JFrame {
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         ch.isiField(jTable2.getSelectedRow());
     }//GEN-LAST:event_jTable2MouseClicked
-/**
+
     private void StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartActionPerformed
-        //SET CURRENT SPESIFIC TIME
+      /**  //SET CURRENT SPESIFIC TIME
         java.util.Date dt = new java.util.Date();
         java.text.SimpleDateFormat sdf
                 = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -609,16 +609,16 @@ public class Home extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-
-    }//GEN-LAST:event_StartActionPerformed
 */
+    }//GEN-LAST:event_StartActionPerformed
+
     private void jBtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUpdateActionPerformed
         ch.update();
         ch.isiTable();
     }//GEN-LAST:event_jBtnUpdateActionPerformed
-/**
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
+     /**   try {
             //create pdf object
             String file_name = "D:\\RECENT.pdf";
             Document document = new Document();
@@ -656,10 +656,11 @@ public class Home extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println(e);
         }
+         */
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
+     /**   try {
             //create pdf object
             String file_name = "D:\\FULL.pdf";
             Document document = new Document();
@@ -696,15 +697,16 @@ public class Home extends javax.swing.JFrame {
             System.out.println("finished");
         } catch (Exception e) {
             System.err.println(e);
-        }
+        } */
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Login lg = new Login();
+      /**  Login lg = new Login();
         lg.setVisible(true);
         setVisible(false);
+        */
     }//GEN-LAST:event_jButton3ActionPerformed
-*/
+
     /**
      * @param args the command line arguments
      */
