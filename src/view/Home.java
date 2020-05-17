@@ -17,12 +17,22 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import controller.HomeController;
 /**
  *
  * @author Bima
  */
 public class Home extends javax.swing.JFrame {
-
+    
+    HomeController ch;
+    
+    public Home(){
+        initComponents();
+        ch = new HomeController(this);
+        ch.isiTable();
+    }
+    
+    /** 
     Connection conn;
     PreparedStatement pst;
     ResultSet rs;
@@ -79,7 +89,7 @@ public class Home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
+*/
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -562,142 +572,19 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddActionPerformed
-        //SET CURRENT SPESIFIC TIME
-        java.util.Date dt = new java.util.Date();
-        java.text.SimpleDateFormat sdf
-                = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        String currentTime = sdf.format(dt);
-        //QUERYINNG
-        String sql = "INSERT INTO service(Customer_Name,Type_Of_Service,Description,Detail_Date) VALUES (?,?,?,?)";
-        try {
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, jTextField1.getText());
-            pst.setString(2, (String) jComboBox1.getSelectedItem());
-            pst.setString(3, jTextField3.getText());
-            pst.setString(4, currentTime);
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Added In Queue...!!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-        String sql_log = "INSERT INTO log(Customer_Name,Type_Of_Service,Description,Detail_Date) VALUES (?,?,?,?)";
-        try {
-            pst = conn.prepareStatement(sql_log);
-            pst.setString(1, jTextField1.getText());
-            pst.setString(2, (String) jComboBox1.getSelectedItem());
-            pst.setString(3, jTextField3.getText());
-            pst.setString(4, currentTime);
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Added In Log");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-        jTextField1.setText("");
-        jTextField3.setText("");
-        jTable2();
+        ch.insert();
+        ch.isiTable();
     }//GEN-LAST:event_jBtnAddActionPerformed
 
     private void jBtnCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCompleteActionPerformed
-        int answer = JOptionPane.showConfirmDialog(this, "Are you sure to completed this task?, the task will be deleted");
-        switch (answer) {
-            case JOptionPane.YES_OPTION:
-                Delete();
-                jTable2();
-                jTextField4.setText("");
-                jTextField2.setText("");
-                jTextField6.setText("");
-                jTextField7.setText("");
-                jTextField4.setEnabled(true);
-                jTextField2.setEnabled(true);
-                jTextField6.setEnabled(true);
-                break;
-            case JOptionPane.NO_OPTION:
-                jTextField4.setText("");
-                jTextField2.setText("");
-                jTextField6.setText("");
-                jTextField7.setText("");
-                jTextField4.setEnabled(true);
-                jTextField2.setEnabled(true);
-                jTextField6.setEnabled(true);
-                break;
-
-        }
-
+        ch.delete();
+        ch.isiTable();
     }//GEN-LAST:event_jBtnCompleteActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        Object[] choices = {"Start", "Update"};
-        Object defaultChoice = choices[0];
-        int answer = JOptionPane.showOptionDialog(null,
-                "Please choose which one of the service do you want?",
-                "PLEASE SELECT",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                choices,
-                defaultChoice);
-
-        switch (answer) {
-            case JOptionPane.YES_OPTION:
-                //CLEARING SHOWING TEXTFIELD
-                jTextField9.setText("");
-                jTextField8.setText("");
-                jTextField10.setText("");
-                //IF SELECT START
-                try {
-                    int row = jTable2.getSelectedRow();
-                    String Table_click = (jTable2.getModel().getValueAt(row, 0).toString());
-                    String sql = "select * from service where Serial='" + Table_click + "'";
-                    pst = conn.prepareStatement(sql);
-                    rs = pst.executeQuery();
-                    if (rs.next()) {
-                        String add1 = rs.getString("Customer_name");
-                        jTextField4.setText(add1);
-                        String add2 = rs.getString("Type_Of_Service");
-                        jTextField2.setText(add2);
-                        String add3 = rs.getString("Description");
-                        jTextField6.setText(add3);
-                        String add4 = rs.getString("Serial");
-                        jTextField7.setText(add4);
-                    }
-                } catch (Exception e) {
-
-                }
-                break;
-            case JOptionPane.NO_OPTION:
-                //CLEARING SHOWING TEXTFIELD
-                jTextField4.setText("");
-                jTextField2.setText("");
-                jTextField6.setText("");
-                jTextField7.setText("");
-                //IF SELECT UPDATE
-                try {
-                    int row = jTable2.getSelectedRow();
-                    String Table_click = (jTable2.getModel().getValueAt(row, 0).toString());
-                    String sql = "select * from service where Serial='" + Table_click + "'";
-                    pst = conn.prepareStatement(sql);
-                    rs = pst.executeQuery();
-                    if (rs.next()) {
-                        String add1 = rs.getString("Customer_name");
-                        jTextField9.setText(add1);
-                        String add2 = rs.getString("Type_Of_Service");
-                        jComboBox2.setSelectedItem(add2);
-                        String add3 = rs.getString("Description");
-                        jTextField8.setText(add3);
-                        String add4 = rs.getString("Serial");
-                        jTextField10.setText(add4);
-                    }
-                } catch (Exception e) {
-
-                }
-                break;
-            case JOptionPane.CANCEL_OPTION:
-
-        }
-
+        ch.isiField(jTable2.getSelectedRow());
     }//GEN-LAST:event_jTable2MouseClicked
-
+/**
     private void StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartActionPerformed
         //SET CURRENT SPESIFIC TIME
         java.util.Date dt = new java.util.Date();
@@ -724,15 +611,12 @@ public class Home extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_StartActionPerformed
-
+*/
     private void jBtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUpdateActionPerformed
-        Update();
-        jTable2();
-        jTextField9.setText("");
-        jTextField8.setText("");
-        jTextField10.setText("");
+        ch.update();
+        ch.isiTable();
     }//GEN-LAST:event_jBtnUpdateActionPerformed
-
+/**
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             //create pdf object
@@ -820,41 +704,41 @@ public class Home extends javax.swing.JFrame {
         lg.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
-
+*/
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+//    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+//        try {
+  //          for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+ //               if ("Nimbus".equals(info.getName())) {
+ //                   javax.swing.UIManager.setLookAndFeel(info.getClassName());
+ //                   break;
+  //              }
+  //          }
+ //       } catch (ClassNotFoundException ex) {
+  //          java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+   //     } catch (InstantiationException ex) {
+    //        java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+     //   } catch (IllegalAccessException ex) {
+    //        java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    //    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+     //       java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+     //   }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
-            }
-        });
-    }
+ //       java.awt.EventQueue.invokeLater(new Runnable() {
+ //           public void run() {
+ //               new Home().setVisible(true);
+ //           }
+ //       });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Start;
